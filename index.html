@@ -37,7 +37,7 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--border);
   }
@@ -66,6 +66,70 @@
     margin-top: 2px;
   }
 
+  /* ── Search ── */
+  .search-wrap {
+    position: relative;
+    margin-bottom: 1.25rem;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--hint);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+  }
+
+  #search {
+    width: 100%;
+    height: 40px;
+    padding: 0 14px 0 38px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  #search::placeholder { color: var(--hint); }
+
+  #search:focus {
+    border-color: #b0af98;
+    box-shadow: 0 0 0 3px rgba(253,237,0,0.22);
+  }
+
+  .clear-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--hint);
+    padding: 4px;
+    border-radius: 4px;
+    display: none;
+    align-items: center;
+    line-height: 1;
+  }
+  .clear-btn:hover { color: var(--muted); }
+  .clear-btn.visible { display: flex; }
+
+  /* ── Meta row ── */
+  .meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
   .section-label {
     font-family: 'DM Mono', monospace;
     font-size: 10.5px;
@@ -73,13 +137,23 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--hint);
-    margin-bottom: 10px;
   }
 
+  .count-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--hint);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2px 8px;
+  }
+
+  /* ── List ── */
   .list {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 5px;
     margin-bottom: 2.5rem;
   }
 
@@ -89,12 +163,11 @@
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 14px 16px;
-    gap: 14px;
+    padding: 13px 16px;
+    gap: 13px;
     text-decoration: none;
     color: inherit;
     transition: border-color 0.15s, box-shadow 0.15s;
-    animation: fadeUp 0.3s ease both;
   }
 
   .item:hover {
@@ -104,10 +177,12 @@
 
   .item:hover .arrow { opacity: 1; transform: translateX(0); }
 
+  .item.hidden { display: none; }
+
   .item-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 7px;
     background: var(--yellow);
     display: flex;
     align-items: center;
@@ -115,7 +190,7 @@
     flex-shrink: 0;
   }
 
-  .item-icon svg { width: 16px; height: 16px; }
+  .item-icon svg { width: 15px; height: 15px; }
 
   .item-body { flex: 1; min-width: 0; }
 
@@ -126,6 +201,13 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .item-name mark {
+    background: rgba(253,237,0,0.6);
+    color: inherit;
+    border-radius: 2px;
+    padding: 0 1px;
   }
 
   .item-url {
@@ -141,23 +223,23 @@
   .arrow {
     color: var(--muted);
     font-size: 16px;
-    opacity: 0.4;
+    opacity: 0.35;
     transform: translateX(-4px);
     transition: opacity 0.15s, transform 0.15s;
     flex-shrink: 0;
   }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
+  /* ── Empty state ── */
+  #empty {
+    display: none;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--muted);
   }
 
-  .item:nth-child(1) { animation-delay: 0.04s; }
-  .item:nth-child(2) { animation-delay: 0.08s; }
-  .item:nth-child(3) { animation-delay: 0.12s; }
-  .item:nth-child(4) { animation-delay: 0.16s; }
-  .item:nth-child(5) { animation-delay: 0.20s; }
-  .item:nth-child(6) { animation-delay: 0.24s; }
+  #empty .empty-icon { font-size: 26px; margin-bottom: 10px; opacity: 0.5; }
+  #empty p { font-size: 14px; }
+  #empty span { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--hint); }
 
   footer {
     text-align: center;
@@ -179,51 +261,84 @@
     </div>
   </header>
 
-  <div class="section-label">Equipos disponibles</div>
+  <div class="search-wrap">
+    <span class="search-icon">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M10 10L14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <input id="search" type="text" placeholder="Buscar equipo…" autocomplete="off" spellcheck="false">
+    <button class="clear-btn" id="clearBtn" aria-label="Limpiar">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+        <path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
 
-  <div class="list">
+  <div class="meta-row">
+    <div class="section-label">Equipos disponibles</div>
+    <div class="count-badge" id="countBadge">30 formularios</div>
+  </div>
 
-    <a class="item" href="https://form.platoforms.com/frcea878it7" target="_blank">
-      <div class="item-icon">
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="1" y="5" width="14" height="7" rx="1.5" stroke="#111110" stroke-width="1.3"/>
-          <circle cx="4" cy="11" r="1.5" fill="#111110"/>
-          <circle cx="12" cy="11" r="1.5" fill="#111110"/>
-          <path d="M1 8h14" stroke="#111110" stroke-width="1.3"/>
-        </svg>
-      </div>
+  <div class="list" id="list">
+
+    <a class="item" href="https://form.platoforms.com/fr9ku2wlp5z" target="_blank" data-name="Caja Seca 2E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
       <div class="item-body">
-        <div class="item-name">Porta 4020 — 3 ejes</div>
-        <div class="item-url">form.platoforms.com/frcea878it7</div>
+        <div class="item-name">Caja Seca 2E 40P</div>
+        <div class="item-url">form.platoforms.com/fr9ku2wlp5z</div>
       </div>
       <div class="arrow">→</div>
     </a>
 
-    <a class="item" href="https://form.platoforms.com/frjzv0mfwes" target="_blank">
-      <div class="item-icon">
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="1" y="5" width="14" height="7" rx="1.5" stroke="#111110" stroke-width="1.3"/>
-          <circle cx="4" cy="11" r="1.5" fill="#111110"/>
-          <circle cx="12" cy="11" r="1.5" fill="#111110"/>
-          <path d="M1 8h14" stroke="#111110" stroke-width="1.3"/>
-        </svg>
-      </div>
+    <a class="item" href="https://form.platoforms.com/fr6jvjmzvqn" target="_blank" data-name="Caja Seca 2E 53P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
       <div class="item-body">
-        <div class="item-name">Porta 4020 — 2 ejes</div>
-        <div class="item-url">form.platoforms.com/frjzv0mfwes</div>
+        <div class="item-name">Caja Seca 2E 53P</div>
+        <div class="item-url">form.platoforms.com/fr6jvjmzvqn</div>
       </div>
       <div class="arrow">→</div>
     </a>
 
-    <a class="item" href="https://form.platoforms.com/frlu4crod5k" target="_blank">
-      <div class="item-icon">
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="1" y="5" width="14" height="7" rx="1.5" stroke="#111110" stroke-width="1.3"/>
-          <circle cx="4" cy="11" r="1.5" fill="#111110"/>
-          <circle cx="12" cy="11" r="1.5" fill="#111110"/>
-          <path d="M1 8h14" stroke="#111110" stroke-width="1.3"/>
-        </svg>
+    <a class="item" href="https://form.platoforms.com/fr6u0p7rstb" target="_blank" data-name="Cama Baja 2E 48P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Cama Baja 2E 48P</div>
+        <div class="item-url">form.platoforms.com/fr6u0p7rstb</div>
       </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frkh74w0err" target="_blank" data-name="Cama Baja 2E 53P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Cama Baja 2E 53P</div>
+        <div class="item-url">form.platoforms.com/frkh74w0err</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frnesp8p4rg" target="_blank" data-name="Cama Baja 3E 48P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Cama Baja 3E 48P</div>
+        <div class="item-url">form.platoforms.com/frnesp8p4rg</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frkh5lrtqww" target="_blank" data-name="Cama Baja 3E 53P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Cama Baja 3E 53P</div>
+        <div class="item-url">form.platoforms.com/frkh5lrtqww</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frlu4crod5k" target="_blank" data-name="Dolly">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
       <div class="item-body">
         <div class="item-name">Dolly</div>
         <div class="item-url">form.platoforms.com/frlu4crod5k</div>
@@ -231,15 +346,161 @@
       <div class="arrow">→</div>
     </a>
 
-    <a class="item" href="https://form.platoforms.com/fr0slhxbvbz" target="_blank">
-      <div class="item-icon">
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="1" y="5" width="14" height="7" rx="1.5" stroke="#111110" stroke-width="1.3"/>
-          <circle cx="4" cy="11" r="1.5" fill="#111110"/>
-          <circle cx="12" cy="11" r="1.5" fill="#111110"/>
-          <path d="M1 8h14" stroke="#111110" stroke-width="1.3"/>
-        </svg>
+    <a class="item" href="https://form.platoforms.com/fr3xilmg7il" target="_blank" data-name="Góndola 2E">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Góndola 2E</div>
+        <div class="item-url">form.platoforms.com/fr3xilmg7il</div>
       </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frzb6qo96bm" target="_blank" data-name="Góndola 3E">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Góndola 3E</div>
+        <div class="item-url">form.platoforms.com/frzb6qo96bm</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frijc0e6cim" target="_blank" data-name="Jaula Chatarrera 2E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Jaula Chatarrera 2E 40P</div>
+        <div class="item-url">form.platoforms.com/frijc0e6cim</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frhy0yp64sv" target="_blank" data-name="Jaula Chatarrera 3E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Jaula Chatarrera 3E 40P</div>
+        <div class="item-url">form.platoforms.com/frhy0yp64sv</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frz3ieil985" target="_blank" data-name="Plataforma Alta 2E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma Alta 2E 40P</div>
+        <div class="item-url">form.platoforms.com/frz3ieil985</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frm431l612e" target="_blank" data-name="Plataforma Alta 3E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma Alta 3E 40P</div>
+        <div class="item-url">form.platoforms.com/frm431l612e</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/freibqsswhj" target="_blank" data-name="Plataforma HQ 2E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 2E 40P</div>
+        <div class="item-url">form.platoforms.com/freibqsswhj</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/fr0rzh7pdpu" target="_blank" data-name="Plataforma HQ 2E 42P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 2E 42P</div>
+        <div class="item-url">form.platoforms.com/fr0rzh7pdpu</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frsuztxof8l" target="_blank" data-name="Plataforma HQ 2E 48P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 2E 48P</div>
+        <div class="item-url">form.platoforms.com/frsuztxof8l</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frwsz7r5h0k" target="_blank" data-name="Plataforma HQ 2E 53P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 2E 53P</div>
+        <div class="item-url">form.platoforms.com/frwsz7r5h0k</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/fre45v6ng7f" target="_blank" data-name="Plataforma HQ 3E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 3E 40P</div>
+        <div class="item-url">form.platoforms.com/fre45v6ng7f</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/fr3gznyk0j9" target="_blank" data-name="Plataforma HQ 3E 42P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 3E 42P</div>
+        <div class="item-url">form.platoforms.com/fr3gznyk0j9</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frbhib225uf" target="_blank" data-name="Plataforma HQ 3E 48P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 3E 48P</div>
+        <div class="item-url">form.platoforms.com/frbhib225uf</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frt7gmtfieu" target="_blank" data-name="Plataforma HQ 3E 53P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 3E 53P</div>
+        <div class="item-url">form.platoforms.com/frt7gmtfieu</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frozwv59v5u" target="_blank" data-name="Porta 20 2E 20P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Porta 20 2E 20P</div>
+        <div class="item-url">form.platoforms.com/frozwv59v5u</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frjzv0mfwes" target="_blank" data-name="Porta 4020 2E">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Porta 4020 2E</div>
+        <div class="item-url">form.platoforms.com/frjzv0mfwes</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frcea878it7" target="_blank" data-name="Porta 4020 3E">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Porta 4020 3E</div>
+        <div class="item-url">form.platoforms.com/frcea878it7</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/fr0slhxbvbz" target="_blank" data-name="Porta Burrita 4020">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
       <div class="item-body">
         <div class="item-name">Porta Burrita 4020</div>
         <div class="item-url">form.platoforms.com/fr0slhxbvbz</div>
@@ -247,42 +508,109 @@
       <div class="arrow">→</div>
     </a>
 
-    <a class="item" href="https://form.platoforms.com/frzb6qo96bm" target="_blank">
-      <div class="item-icon">
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="1" y="5" width="14" height="7" rx="1.5" stroke="#111110" stroke-width="1.3"/>
-          <circle cx="4" cy="11" r="1.5" fill="#111110"/>
-          <circle cx="12" cy="11" r="1.5" fill="#111110"/>
-          <path d="M1 8h14" stroke="#111110" stroke-width="1.3"/>
-        </svg>
-      </div>
+    <a class="item" href="https://form.platoforms.com/fr3ke3t3zif" target="_blank" data-name="Porta40 2E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
       <div class="item-body">
-        <div class="item-name">Góndola — 3 ejes</div>
-        <div class="item-url">form.platoforms.com/frzb6qo96bm</div>
+        <div class="item-name">Porta40 2E 40P</div>
+        <div class="item-url">form.platoforms.com/fr3ke3t3zif</div>
       </div>
       <div class="arrow">→</div>
     </a>
 
-    <a class="item" href="https://form.platoforms.com/fr3xilmg7il" target="_blank">
-      <div class="item-icon">
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="1" y="5" width="14" height="7" rx="1.5" stroke="#111110" stroke-width="1.3"/>
-          <circle cx="4" cy="11" r="1.5" fill="#111110"/>
-          <circle cx="12" cy="11" r="1.5" fill="#111110"/>
-          <path d="M1 8h14" stroke="#111110" stroke-width="1.3"/>
-        </svg>
-      </div>
+    <a class="item" href="https://form.platoforms.com/frckqv2vzjq" target="_blank" data-name="Porta40 3E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
       <div class="item-body">
-        <div class="item-name">Góndola — 2 ejes</div>
-        <div class="item-url">form.platoforms.com/fr3xilmg7il</div>
+        <div class="item-name">Porta40 3E 40P</div>
+        <div class="item-url">form.platoforms.com/frckqv2vzjq</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frxp322yxlj" target="_blank" data-name="Rampa">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Rampa</div>
+        <div class="item-url">form.platoforms.com/frxp322yxlj</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frc69nj7ecl" target="_blank" data-name="Roll Off 18M3">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Roll Off 18M3</div>
+        <div class="item-url">form.platoforms.com/frc69nj7ecl</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frxdcn11dje" target="_blank" data-name="Roll Off 30M3">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Roll Off 30M3</div>
+        <div class="item-url">form.platoforms.com/frxdcn11dje</div>
       </div>
       <div class="arrow">→</div>
     </a>
 
   </div>
 
+  <div id="empty">
+    <div class="empty-icon">🔍</div>
+    <p>Sin resultados para <span id="emptyQuery"></span></p>
+  </div>
+
   <footer>JJForza &nbsp;·&nbsp; Uso interno &nbsp;·&nbsp; 2026</footer>
 
 </div>
+
+<script>
+  const search     = document.getElementById('search');
+  const clearBtn   = document.getElementById('clearBtn');
+  const items      = document.querySelectorAll('.item');
+  const countBadge = document.getElementById('countBadge');
+  const empty      = document.getElementById('empty');
+  const emptyQuery = document.getElementById('emptyQuery');
+  const total      = items.length;
+
+  function normalize(str) {
+    return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  function highlight(text, query) {
+    if (!query) return text;
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp('(' + escaped + ')', 'gi');
+    return text.replace(re, '<mark>$1</mark>');
+  }
+
+  search.addEventListener('input', function () {
+    const raw = this.value;
+    const q   = normalize(raw.trim());
+
+    clearBtn.classList.toggle('visible', raw.length > 0);
+
+    let visible = 0;
+    items.forEach(item => {
+      const name     = item.dataset.name;
+      const match    = !q || normalize(name).includes(q);
+      item.classList.toggle('hidden', !match);
+      if (match) {
+        visible++;
+        item.querySelector('.item-name').innerHTML = q ? highlight(name, raw.trim()) : name;
+      }
+    });
+
+    empty.style.display   = visible === 0 ? 'block' : 'none';
+    emptyQuery.textContent = `"${raw.trim()}"`;
+    countBadge.textContent = q ? `${visible} de ${total}` : `${total} formularios`;
+  });
+
+  clearBtn.addEventListener('click', () => {
+    search.value = '';
+    search.dispatchEvent(new Event('input'));
+    search.focus();
+  });
+</script>
 </body>
 </html>
