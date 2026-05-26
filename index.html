@@ -3,1487 +3,758 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SS FORZA Semirremolques — Financiamiento y Renta</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@400;500;600&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>JJForza — Formularios internos</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ── TOKENS ───────────────────────────────────────────────────────────────── */
-:root {
-  --green:       #5BBD4E;
-  --green-dark:  #4aaa3e;
-  --green-dim:   #3d8f33;
-  --forest:      #162B14;
-  --forest-mid:  #1E3B1B;
-  --forest-lite: #243F21;
-  --black:       #0D0D0D;
-  --gray-900:    #111111;
-  --gray-800:    #1A1A1A;
-  --gray-700:    #252525;
-  --gray-500:    #666;
-  --gray-300:    #999;
-  --gray-100:    #F2F2F2;
-  --white:       #FFFFFF;
-  --ff-head:     'Barlow Condensed', sans-serif;
-  --ff-title:    'Oswald', sans-serif;
-  --ff-body:     'Barlow', sans-serif;
-  --nav-h:       72px;
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { font-family: var(--ff-body); background: var(--white); color: var(--black); overflow-x: hidden; }
-img { display: block; max-width: 100%; }
-a { text-decoration: none; color: inherit; }
+  :root {
+    --yellow: #FDED00;
+    --black: #111110;
+    --surface: #F7F6F2;
+    --card: #FFFFFF;
+    --border: #E2E1DB;
+    --text: #111110;
+    --muted: #6B6A64;
+    --hint: #A09F99;
+    --radius: 10px;
+  }
 
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--black); }
-::-webkit-scrollbar-thumb { background: var(--green); border-radius: 2px; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2.5rem 1.25rem 4rem;
+  }
 
-/* ═══════════════════════════════════════════════════════
-   ANUNCIO SUPERIOR
-════════════════════════════════════════════════════════ */
-.top-bar {
-  background: var(--green);
-  color: var(--black);
-  text-align: center;
-  padding: 8px 20px;
-  font-family: var(--ff-head);
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  position: relative;
-  z-index: 100;
-}
-.top-bar a { font-weight: 900; text-decoration: underline; margin-left: 8px; }
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+  }
 
-/* ═══════════════════════════════════════════════════════
-   NAVBAR
-════════════════════════════════════════════════════════ */
-.nav {
-  position: sticky;
-  top: 0;
-  z-index: 99;
-  background: var(--black);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  height: var(--nav-h);
-  display: flex;
-  align-items: center;
-  padding: 0 40px;
-  gap: 40px;
-  transition: box-shadow 0.3s;
-}
-.nav.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,0.6); }
+  header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
 
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-  text-decoration: none;
-}
-.logo-badge {
-  width: 40px;
-  height: 40px;
-  background: var(--green);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--ff-head);
-  font-weight: 900;
-  font-size: 15px;
-  color: var(--black);
-  letter-spacing: -0.02em;
-  flex-shrink: 0;
-}
-.logo-text {
-  font-family: var(--ff-head);
-  font-weight: 900;
-  font-size: 22px;
-  color: var(--white);
-  letter-spacing: 0.02em;
-  line-height: 1;
-}
-.logo-sub {
-  font-family: var(--ff-body);
-  font-size: 9px;
-  color: var(--green);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  font-weight: 600;
-  margin-top: 2px;
-}
+  .logo-badge {
+    background: var(--yellow);
+    color: var(--black);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  flex: 1;
-  justify-content: center;
-  list-style: none;
-}
-.nav-links a {
-  display: block;
-  padding: 8px 18px;
-  font-family: var(--ff-head);
-  font-weight: 600;
-  font-size: 14px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.75);
-  transition: color 0.2s;
-  position: relative;
-}
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 2px;
-  background: var(--green);
-  transition: width 0.2s;
-}
-.nav-links a:hover { color: var(--white); }
-.nav-links a:hover::after { width: calc(100% - 36px); }
-.nav-links a.active { color: var(--green); }
-.nav-links a.active::after { width: calc(100% - 36px); }
+  .header-text h1 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
 
-.nav-cta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-}
-.btn-outline {
-  padding: 9px 20px;
-  border: 1.5px solid rgba(255,255,255,0.3);
-  border-radius: 4px;
-  font-family: var(--ff-head);
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--white);
-  cursor: pointer;
-  transition: all 0.2s;
-  background: transparent;
-}
-.btn-outline:hover { border-color: var(--white); }
-.btn-green {
-  padding: 9px 22px;
-  background: var(--green);
-  border: 2px solid var(--green);
-  border-radius: 4px;
-  font-family: var(--ff-head);
-  font-weight: 800;
-  font-size: 13px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--black);
-  cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.btn-green:hover { background: var(--green-dark); border-color: var(--green-dark); transform: translateY(-1px); }
-.btn-green-lg {
-  padding: 14px 32px;
-  font-size: 15px;
-  border-radius: 4px;
-}
-.btn-white-lg {
-  padding: 14px 32px;
-  background: transparent;
-  border: 2px solid rgba(255,255,255,0.6);
-  border-radius: 4px;
-  font-family: var(--ff-head);
-  font-weight: 800;
-  font-size: 15px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--white);
-  cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.btn-white-lg:hover { background: rgba(255,255,255,0.1); border-color: var(--white); }
+  .header-text p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
 
-/* ═══════════════════════════════════════════════════════
-   HERO
-════════════════════════════════════════════════════════ */
-.hero {
-  position: relative;
-  background: var(--black);
-  min-height: calc(100vh - var(--nav-h) - 37px);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  overflow: hidden;
-}
+  /* ── Search ── */
+  .search-wrap {
+    position: relative;
+    margin-bottom: 1.25rem;
+  }
 
-/* diagonal green shape */
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  width: 55%;
-  height: 100%;
-  background: var(--forest);
-  clip-path: polygon(12% 0, 100% 0, 100% 100%, 0% 100%);
-  z-index: 0;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0; right: 0;
-  width: 55%;
-  height: 6px;
-  background: var(--green);
-  z-index: 2;
-}
+  .search-icon {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--hint);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+  }
 
-.hero-content {
-  position: relative;
-  z-index: 2;
-  padding: 80px 40px 80px 60px;
-  max-width: 580px;
-}
+  #search {
+    width: 100%;
+    height: 40px;
+    padding: 0 14px 0 38px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
 
-.hero-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(91,189,78,0.12);
-  border: 1px solid rgba(91,189,78,0.3);
-  border-radius: 2px;
-  padding: 5px 12px;
-  font-family: var(--ff-head);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 24px;
-}
-.hero-tag::before {
-  content: '';
-  width: 6px; height: 6px;
-  background: var(--green);
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%,100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.4); }
-}
+  #search::placeholder { color: var(--hint); }
 
-.hero h1 {
-  font-family: var(--ff-head);
-  font-weight: 900;
-  font-size: clamp(44px, 6vw, 72px);
-  line-height: 0.92;
-  color: var(--white);
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  margin-bottom: 6px;
-}
-.hero h1 .accent {
-  color: var(--green);
-  display: block;
-}
-.hero-sub {
-  font-family: var(--ff-body);
-  font-size: 16px;
-  color: rgba(255,255,255,0.55);
-  line-height: 1.6;
-  margin: 20px 0 36px;
-  max-width: 400px;
-}
-.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  #search:focus {
+    border-color: #b0af98;
+    box-shadow: 0 0 0 3px rgba(253,237,0,0.22);
+  }
 
-.hero-media {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 60px 40px 20px;
-  height: 100%;
-}
-.hero-truck-wrap {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-}
-.hero-truck {
-  width: 100%;
-  filter: drop-shadow(-20px 20px 40px rgba(0,0,0,0.7));
-  animation: floatTruck 4s ease-in-out infinite;
-}
-@keyframes floatTruck {
-  0%,100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-.hero-truck-bg {
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  height: 30px;
-  background: radial-gradient(ellipse, rgba(91,189,78,0.25) 0%, transparent 70%);
-  filter: blur(10px);
-}
+  .clear-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--hint);
+    padding: 4px;
+    border-radius: 4px;
+    display: none;
+    align-items: center;
+    line-height: 1;
+  }
+  .clear-btn:hover { color: var(--muted); }
+  .clear-btn.visible { display: flex; }
 
-/* hero truck placeholder (SVG path drawing) */
-.truck-placeholder {
-  width: 100%;
-  aspect-ratio: 16/9;
-  background: linear-gradient(135deg, #1a3a18 0%, #0d1f0b 100%);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--ff-head);
-  font-size: 120px;
-  color: rgba(91,189,78,0.2);
-  position: relative;
-  overflow: hidden;
-}
-.truck-placeholder::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 10px,
-    rgba(91,189,78,0.03) 10px,
-    rgba(91,189,78,0.03) 20px
-  );
-}
+  /* ── Meta row ── */
+  .meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
 
-/* ═══════════════════════════════════════════════════════
-   TRUST BAR
-════════════════════════════════════════════════════════ */
-.trust-bar {
-  background: var(--forest);
-  padding: 0;
-  border-bottom: 3px solid var(--green);
-}
-.trust-items {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.trust-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 24px 32px;
-  border-right: 1px solid rgba(255,255,255,0.07);
-  transition: background 0.2s;
-}
-.trust-item:last-child { border-right: none; }
-.trust-item:hover { background: rgba(91,189,78,0.05); }
-.trust-icon {
-  width: 44px;
-  height: 44px;
-  border: 1.5px solid rgba(91,189,78,0.4);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  flex-shrink: 0;
-  color: var(--green);
-}
-.trust-label {
-  font-family: var(--ff-head);
-  font-weight: 800;
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--white);
-  line-height: 1.2;
-}
-.trust-desc {
-  font-size: 11px;
-  color: rgba(255,255,255,0.45);
-  font-family: var(--ff-body);
-  margin-top: 2px;
-}
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--hint);
+  }
 
-/* ═══════════════════════════════════════════════════════
-   SECTION HEADER
-════════════════════════════════════════════════════════ */
-.section-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 40px;
-}
-.section-eyebrow {
-  display: inline-block;
-  font-family: var(--ff-head);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 8px;
-  padding-left: 14px;
-  border-left: 3px solid var(--green);
-}
-.section-title {
-  font-family: var(--ff-head);
-  font-weight: 900;
-  font-size: clamp(32px, 4vw, 48px);
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  color: var(--black);
-}
-.section-title.light { color: var(--white); }
-.link-all {
-  font-family: var(--ff-head);
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--green);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: gap 0.2s;
-  white-space: nowrap;
-}
-.link-all:hover { gap: 10px; }
+  .count-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--hint);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2px 8px;
+  }
 
-/* ═══════════════════════════════════════════════════════
-   CATÁLOGO (PRODUCT CARDS)
-════════════════════════════════════════════════════════ */
-.catalog-section {
-  padding: 80px 60px;
-  background: var(--white);
-  max-width: 100%;
-}
-.catalog-section .inner { max-width: 1200px; margin: 0 auto; }
+  /* ── List ── */
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 2.5rem;
+  }
 
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  background: var(--gray-100);
-  border: 2px solid var(--gray-100);
-  border-radius: 8px;
-  overflow: hidden;
-}
+  .item {
+    display: flex;
+    align-items: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 13px 16px;
+    gap: 13px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
 
-.product-card {
-  background: var(--white);
-  cursor: pointer;
-  transition: all 0.25s;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.product-card:hover { z-index: 2; transform: scale(1.02); box-shadow: 0 12px 48px rgba(0,0,0,0.2); }
+  .item:hover {
+    border-color: #c5c4be;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
 
-.product-card-img {
-  aspect-ratio: 4/3;
-  background: var(--gray-100);
-  overflow: hidden;
-  position: relative;
-}
-.product-card-img-inner {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 64px;
-  color: rgba(0,0,0,0.1);
-  background: linear-gradient(135deg, #e8f5e6 0%, #d0e8cc 100%);
-  transition: transform 0.4s ease;
-}
-.product-card:hover .product-card-img-inner { transform: scale(1.06); }
-.product-card:hover .product-card-img img { transform: scale(1.06); }
+  .item:hover .arrow { opacity: 1; transform: translateX(0); }
 
-.product-card-img .overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.product-card:hover .overlay { opacity: 1; }
+  .item.hidden { display: none; }
 
-.product-card-body {
-  padding: 20px 22px 22px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.product-card-name {
-  font-family: var(--ff-head);
-  font-weight: 800;
-  font-size: 20px;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  color: var(--black);
-  margin-bottom: 12px;
-}
-.product-specs {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-bottom: 18px;
-  flex: 1;
-}
-.product-specs li {
-  font-size: 13px;
-  color: var(--gray-500);
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  font-family: var(--ff-body);
-}
-.product-specs li::before {
-  content: '✓';
-  color: var(--green);
-  font-weight: 700;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-.product-link {
-  font-family: var(--ff-head);
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--green);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding-top: 16px;
-  border-top: 1px solid var(--gray-100);
-  margin-top: auto;
-  transition: gap 0.2s;
-}
-.product-link:hover { gap: 10px; }
+  .item-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 7px;
+    background: var(--yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
 
-/* ═══════════════════════════════════════════════════════
-   ABOUT / VALUE PROP
-════════════════════════════════════════════════════════ */
-.about-section {
-  background: var(--forest);
-  padding: 80px 60px;
-  position: relative;
-  overflow: hidden;
-}
-.about-section::before {
-  content: '';
-  position: absolute;
-  top: -80px; right: -80px;
-  width: 400px; height: 400px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(91,189,78,0.08), transparent 70%);
-}
-.about-section .inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-.about-left h2 {
-  font-family: var(--ff-head);
-  font-weight: 900;
-  font-size: clamp(36px, 4vw, 54px);
-  line-height: 1;
-  text-transform: uppercase;
-  color: var(--white);
-  margin-bottom: 20px;
-}
-.about-left h2 em {
-  font-style: normal;
-  color: var(--green);
-}
-.about-left p {
-  font-family: var(--ff-body);
-  font-size: 16px;
-  line-height: 1.7;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 36px;
-}
+  .item-icon svg { width: 15px; height: 15px; }
 
-.value-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-.value-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  padding: 20px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  transition: background 0.2s;
-}
-.value-item:last-child { border-bottom: none; }
-.value-icon-wrap {
-  width: 48px;
-  height: 48px;
-  background: rgba(91,189,78,0.1);
-  border: 1px solid rgba(91,189,78,0.25);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  flex-shrink: 0;
-  transition: all 0.2s;
-}
-.value-item:hover .value-icon-wrap { background: rgba(91,189,78,0.2); border-color: rgba(91,189,78,0.5); }
-.value-text strong {
-  display: block;
-  font-family: var(--ff-head);
-  font-weight: 800;
-  font-size: 16px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--white);
-  margin-bottom: 4px;
-}
-.value-text span {
-  font-size: 13px;
-  color: rgba(255,255,255,0.45);
-  font-family: var(--ff-body);
-  line-height: 1.5;
-}
+  .item-body { flex: 1; min-width: 0; }
 
-/* ═══════════════════════════════════════════════════════
-   STATS BAR
-════════════════════════════════════════════════════════ */
-.stats-bar {
-  background: var(--green);
-  padding: 48px 60px;
-}
-.stats-bar .inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-}
-.stat-item {
-  text-align: center;
-  padding: 0 24px;
-  border-right: 1px solid rgba(0,0,0,0.15);
-}
-.stat-item:last-child { border-right: none; }
-.stat-num {
-  font-family: var(--ff-head);
-  font-weight: 900;
-  font-size: clamp(40px, 5vw, 64px);
-  line-height: 1;
-  color: var(--black);
-  letter-spacing: -0.02em;
-}
-.stat-label {
-  font-family: var(--ff-head);
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.65);
-  margin-top: 6px;
-}
+  .item-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-/* ═══════════════════════════════════════════════════════
-   FINANCIAMIENTO
-════════════════════════════════════════════════════════ */
-.finance-section {
-  background: var(--gray-900);
-  padding: 80px 60px;
-  position: relative;
-  overflow: hidden;
-}
-.finance-section .inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 80px;
-  align-items: center;
-}
+  .item-name mark {
+    background: rgba(253,237,0,0.6);
+    color: inherit;
+    border-radius: 2px;
+    padding: 0 1px;
+  }
 
-.finance-card-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-.finance-card {
-  background: var(--gray-800);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 8px;
-  padding: 22px;
-  transition: all 0.2s;
-  cursor: default;
-  position: relative;
-  overflow: hidden;
-}
-.finance-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 3px; height: 100%;
-  background: var(--green);
-  transform: scaleY(0);
-  transition: transform 0.2s;
-  transform-origin: bottom;
-}
-.finance-card:hover { border-color: rgba(91,189,78,0.2); transform: translateY(-3px); }
-.finance-card:hover::before { transform: scaleY(1); }
-.finance-card-icon { font-size: 28px; margin-bottom: 12px; }
-.finance-card-title {
-  font-family: var(--ff-head);
-  font-weight: 800;
-  font-size: 14px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--white);
-  margin-bottom: 6px;
-}
-.finance-card-desc {
-  font-size: 12px;
-  color: rgba(255,255,255,0.4);
-  font-family: var(--ff-body);
-  line-height: 1.5;
-}
-.finance-card.featured {
-  background: linear-gradient(135deg, var(--forest) 0%, var(--forest-lite) 100%);
-  border-color: rgba(91,189,78,0.3);
-  grid-column: span 2;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.finance-card.featured .finance-card-title { font-size: 16px; margin-bottom: 4px; }
+  .item-url {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--hint);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-/* ═══════════════════════════════════════════════════════
-   CTA WHATSAPP
-════════════════════════════════════════════════════════ */
-.cta-wa {
-  background: var(--green);
-  padding: 0 60px;
-}
-.cta-wa .inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 40px;
-  padding: 36px 0;
-}
-.cta-wa-left {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.wa-icon {
-  width: 52px;
-  height: 52px;
-  background: rgba(0,0,0,0.15);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  flex-shrink: 0;
-}
-.cta-wa-text strong {
-  display: block;
-  font-family: var(--ff-head);
-  font-weight: 900;
-  font-size: 22px;
-  color: var(--black);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
-.cta-wa-text span {
-  font-size: 14px;
-  color: rgba(0,0,0,0.6);
-  font-family: var(--ff-body);
-}
-.btn-dark {
-  padding: 16px 40px;
-  background: var(--black);
-  color: var(--white);
-  font-family: var(--ff-head);
-  font-weight: 800;
-  font-size: 15px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border-radius: 4px;
-  cursor: pointer;
-  border: 2px solid var(--black);
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-.btn-dark:hover { background: transparent; color: var(--black); }
+  .arrow {
+    color: var(--muted);
+    font-size: 16px;
+    opacity: 0.35;
+    transform: translateX(-4px);
+    transition: opacity 0.15s, transform 0.15s;
+    flex-shrink: 0;
+  }
 
-/* ═══════════════════════════════════════════════════════
-   FOOTER
-════════════════════════════════════════════════════════ */
-footer {
-  background: var(--black);
-  padding: 60px 60px 0;
-  border-top: 1px solid rgba(255,255,255,0.05);
-}
-footer .inner {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
-  gap: 48px;
-  padding-bottom: 48px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.footer-brand p {
-  font-size: 13px;
-  color: rgba(255,255,255,0.35);
-  margin: 12px 0 20px;
-  font-family: var(--ff-body);
-  line-height: 1.6;
-  max-width: 240px;
-}
-.footer-social {
-  display: flex;
-  gap: 10px;
-}
-.social-btn {
-  width: 34px; height: 34px;
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px;
-  color: rgba(255,255,255,0.5);
-  cursor: pointer;
-  transition: all 0.2s;
-  text-decoration: none;
-}
-.social-btn:hover { border-color: var(--green); color: var(--green); }
-.footer-col h4 {
-  font-family: var(--ff-head);
-  font-weight: 800;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--white);
-  margin-bottom: 16px;
-}
-.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.footer-col ul li a {
-  font-size: 13px;
-  color: rgba(255,255,255,0.4);
-  font-family: var(--ff-body);
-  transition: color 0.2s;
-}
-.footer-col ul li a:hover { color: var(--green); }
-.footer-col .contact-item {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  margin-bottom: 10px;
-  font-size: 13px;
-  color: rgba(255,255,255,0.4);
-  font-family: var(--ff-body);
-}
-.contact-item .icon { color: var(--green); flex-shrink: 0; margin-top: 1px; }
-.footer-bottom {
-  padding: 20px 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 12px;
-  color: rgba(255,255,255,0.25);
-  font-family: var(--ff-body);
-}
-.footer-bottom a { color: rgba(255,255,255,0.25); transition: color 0.2s; }
-.footer-bottom a:hover { color: var(--green); }
-.footer-links { display: flex; gap: 20px; }
-.iso-badge {
-  border: 1.5px solid rgba(91,189,78,0.4);
-  border-radius: 50%;
-  width: 48px; height: 48px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--ff-head);
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--green);
-  flex-direction: column;
-  line-height: 1;
-}
-.iso-badge small { font-size: 8px; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; }
+  /* ── Empty state ── */
+  #empty {
+    display: none;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--muted);
+  }
 
-/* ═══════════════════════════════════════════════════════
-   SCROLL ANIMATIONS
-════════════════════════════════════════════════════════ */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
+  #empty .empty-icon { font-size: 26px; margin-bottom: 10px; opacity: 0.5; }
+  #empty p { font-size: 14px; }
+  #empty span { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--hint); }
 
-/* ═══════════════════════════════════════════════════════
-   MOBILE HAMBURGER
-════════════════════════════════════════════════════════ */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-  padding: 4px;
-}
-.hamburger span {
-  display: block;
-  width: 24px; height: 2px;
-  background: var(--white);
-  transition: all 0.2s;
-}
-
-/* ═══════════════════════════════════════════════════════
-   RESPONSIVE
-════════════════════════════════════════════════════════ */
-@media (max-width: 1024px) {
-  .hero { grid-template-columns: 1fr; min-height: auto; }
-  .hero::before { display: none; }
-  .hero-content { padding: 60px 24px 40px; max-width: 100%; }
-  .hero-media { padding: 0 24px 60px; }
-  .trust-items { grid-template-columns: repeat(2, 1fr); }
-  .about-section .inner { grid-template-columns: 1fr; gap: 40px; }
-  .finance-section .inner { grid-template-columns: 1fr; gap: 40px; }
-  .stats-bar .inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  .stat-item { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.15); padding: 16px 0; }
-  .stat-item:last-child, .stat-item:nth-child(3) { border-bottom: none; }
-  .product-grid { grid-template-columns: 1fr 1fr; }
-  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .cta-wa .inner { grid-template-columns: 1fr; }
-  .nav-links { display: none; }
-  .hamburger { display: flex; }
-}
-@media (max-width: 640px) {
-  .catalog-section, .about-section, .finance-section, .stats-bar, footer { padding-left: 20px; padding-right: 20px; }
-  .cta-wa { padding: 0 20px; }
-  .nav { padding: 0 20px; }
-  .trust-items { grid-template-columns: 1fr; }
-  .product-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; }
-  .finance-card-grid { grid-template-columns: 1fr; }
-  .finance-card.featured { grid-column: span 1; flex-direction: column; }
-}
+  footer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--hint);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
 </style>
 </head>
 <body>
+<div class="page">
 
-<!-- ── TOP BAR ── -->
-<div class="top-bar">
-  🚛 Entrega inmediata en todo México · Planes desde $0 de enganche
-  <a href="https://wa.me/5214441234567">Cotiza ahora →</a>
-</div>
-
-<!-- ── NAVBAR ── -->
-<nav class="nav" id="main-nav">
-  <a href="/" class="nav-logo">
-    <div class="logo-badge">SS</div>
-    <div>
-      <div class="logo-text">FORZA</div>
-      <div class="logo-sub">Semirremolques</div>
+  <header>
+    <div class="logo-badge">JJFORZA</div>
+    <div class="header-text">
+      <h1>Portal de formularios</h1>
+      <p>Herramientas internas PlatoForms — Equipo comercial</p>
     </div>
-  </a>
+  </header>
 
-  <ul class="nav-links">
-    <li><a href="#catalogo" class="active">Catálogo</a></li>
-    <li><a href="#financiamiento">Financiamiento</a></li>
-    <li><a href="#refacciones">Refacciones</a></li>
-    <li><a href="#nosotros">Nosotros</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-  </ul>
-
-  <div class="nav-cta">
-    <button class="btn-outline">Iniciar sesión</button>
-    <a href="#contacto" class="btn-green">Cotizar ahora →</a>
+  <div class="search-wrap">
+    <span class="search-icon">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M10 10L14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <input id="search" type="text" placeholder="Buscar equipo…" autocomplete="off" spellcheck="false">
+    <button class="clear-btn" id="clearBtn" aria-label="Limpiar">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+        <path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </button>
   </div>
 
-  <div class="hamburger" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </div>
-</nav>
-
-<!-- ── HERO ── -->
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-tag">Financiamiento y Renta Disponible</div>
-    <h1>
-      Financiamiento<br>
-      y Semirremolques<br>
-      para hacer
-      <span class="accent">Crecer tu negocio.</span>
-    </h1>
-    <p class="hero-sub">
-      Soluciones flexibles de arrendamiento y venta con el respaldo que tu operación necesita. Entrega inmediata en todo el país.
-    </p>
-    <div class="hero-actions">
-      <a href="#contacto" class="btn-green btn-green-lg">Cotizar ahora →</a>
-      <a href="#catalogo" class="btn-white-lg">Ver planes</a>
-    </div>
+  <div class="meta-row">
+    <div class="section-label">Equipos disponibles</div>
+    <div class="count-badge" id="countBadge">44 formularios</div>
   </div>
 
-  <div class="hero-media">
-    <div class="hero-truck-wrap">
-      <!-- Hero truck image -->
-      <img 
-        src="https://images.pexels.com/photos/1084537/pexels-photo-1084537.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&fit=crop" 
-        alt="SS FORZA Semirremolque" 
-        class="hero-truck"
-        style="width:100%;border-radius:8px;filter:drop-shadow(-20px 20px 40px rgba(0,0,0,0.7))"
-      >
-      <div class="hero-truck-bg"></div>
-    </div>
-  </div>
-</section>
+  <div class="list" id="list">
 
-<!-- ── TRUST BAR ── -->
-<div class="trust-bar">
-  <div class="trust-items">
-    <div class="trust-item">
-      <div class="trust-icon">📋</div>
-      <div>
-        <div class="trust-label">Planes Flexibles<br>a tu medida</div>
-        <div class="trust-desc">Financiamiento personalizado</div>
+    <a class="item" href="https://form.platoforms.com/fr9ku2wlp5z" target="_blank" data-name="Caja Seca 2E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Caja Seca 2E 40P</div>
+        <div class="item-url">form.platoforms.com/fr9ku2wlp5z</div>
       </div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-icon">⚡</div>
-      <div>
-        <div class="trust-label">Aprobación<br>Rápida</div>
-        <div class="trust-desc">Respuesta en 24 hrs</div>
-      </div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-icon">🚚</div>
-      <div>
-        <div class="trust-label">Entrega<br>Inmediata</div>
-        <div class="trust-desc">Stock disponible</div>
-      </div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-icon">🔧</div>
-      <div>
-        <div class="trust-label">Mantenimiento<br>y Soporte</div>
-        <div class="trust-desc">Soporte técnico 24/7</div>
-      </div>
-    </div>
-  </div>
-</div>
+      <div class="arrow">→</div>
+    </a>
 
-<!-- ── CATÁLOGO ── -->
-<section class="catalog-section" id="catalogo">
-  <div class="inner">
-    <div class="section-header reveal">
-      <div>
-        <div class="section-eyebrow">Catálogo de Equipos</div>
-        <h2 class="section-title">Semirremolques para<br>cada operación</h2>
-      </div>
-      <a href="#" class="link-all">Ver todos los modelos →</a>
-    </div>
 
-    <div class="product-grid">
-      <!-- Card 1 -->
-      <div class="product-card reveal reveal-delay-1">
-        <div class="product-card-img">
-          <img src="https://images.pexels.com/photos/27099095/pexels-photo-27099095.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop" alt="Caja Seca Semirremolque" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-card-body">
-          <div class="product-card-name">Caja Seca</div>
-          <ul class="product-specs">
-            <li>48' a 53' de longitud</li>
-            <li>Piso de madera laminada</li>
-            <li>Paredes de lámina</li>
-            <li>Puertas traseras reforzadas</li>
-          </ul>
-          <a href="#" class="product-link">Ver detalles →</a>
-        </div>
+    <a class="item" href="https://form.platoforms.com/fry9z78ye28" target="_blank" data-name="Caja Seca 2E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Caja Seca 2E 48P</div>
+        <div class="item-url">form.platoforms.com/fr9ku2wlp5z</div>
       </div>
+      <div class="arrow">→</div>
+    </a>
 
-      <!-- Card 2 -->
-      <div class="product-card reveal reveal-delay-2">
-        <div class="product-card-img">
-          <img src="https://images.pexels.com/photos/2199293/pexels-photo-2199293.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop" alt="Plataforma Semirremolque" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-card-body">
-          <div class="product-card-name">Plataforma</div>
-          <ul class="product-specs">
-            <li>40' a 53' de longitud</li>
-            <li>Piso de madera tratada</li>
-            <li>Estructura de acero</li>
-            <li>Carga general</li>
-          </ul>
-          <a href="#" class="product-link">Ver detalles →</a>
-        </div>
+    <a class="item" href="https://form.platoforms.com/frwhj02bi49" target="_blank" data-name="Caja Seca 2E 53P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Caja Seca 2E 53P</div>
+        <div class="item-url">form.platoforms.com/frwhj02bi49</div>
       </div>
+      <div class="arrow">→</div>
+    </a>
 
-      <!-- Card 3 -->
-      <div class="product-card reveal reveal-delay-3">
-        <div class="product-card-img">
-          <img src="https://images.pexels.com/photos/906982/pexels-photo-906982.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop" alt="Portacontenedor Semirremolque" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-card-body">
-          <div class="product-card-name">Portacontenedor</div>
-          <ul class="product-specs">
-            <li>20' | 40' | 45'</li>
-            <li>Estructura reforzada</li>
-            <li>Candados twist-lock</li>
-            <li>Transporte intermodal</li>
-          </ul>
-          <a href="#" class="product-link">Ver detalles →</a>
-        </div>
+    <a class="item" href="https://form.platoforms.com/fr6u0p7rstb" target="_blank" data-name="Cama Baja 2E 48P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Cama Baja 2E 48P</div>
+        <div class="item-url">form.platoforms.com/fr6u0p7rstb</div>
       </div>
+      <div class="arrow">→</div>
+    </a>
 
-      <!-- Card 4 -->
-      <div class="product-card reveal reveal-delay-1">
-        <div class="product-card-img">
-          <img src="https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop" alt="Lowboy Semirremolque" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-card-body">
-          <div class="product-card-name">Lowboy</div>
-          <ul class="product-specs">
-            <li>Cama baja especializada</li>
-            <li>Carga de maquinaria pesada</li>
-            <li>Rampas desmontables</li>
-            <li>Capacidad 40 - 80 ton</li>
-          </ul>
-          <a href="#" class="product-link">Ver detalles →</a>
-        </div>
+    <a class="item" href="https://form.platoforms.com/frkh74w0err" target="_blank" data-name="Cama Baja 2E 53P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Cama Baja 2E 53P</div>
+        <div class="item-url">form.platoforms.com/frkh74w0err</div>
       </div>
+      <div class="arrow">→</div>
+    </a>
 
-      <!-- Card 5 -->
-      <div class="product-card reveal reveal-delay-2">
-        <div class="product-card-img">
-          <img src="https://images.pexels.com/photos/2449452/pexels-photo-2449452.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop" alt="Tolva Semirremolque" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-card-body">
-          <div class="product-card-name">Tolva</div>
-          <ul class="product-specs">
-            <li>Capacidad 30 - 50 m³</li>
-            <li>Granos y minerales</li>
-            <li>Descarga por compuertas</li>
-            <li>Estructura Hardox</li>
-          </ul>
-          <a href="#" class="product-link">Ver detalles →</a>
-        </div>
+    <a class="item" href="https://form.platoforms.com/frnesp8p4rg" target="_blank" data-name="Cama Baja 3E 48P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Cama Baja 3E 48P</div>
+        <div class="item-url">form.platoforms.com/frnesp8p4rg</div>
       </div>
+      <div class="arrow">→</div>
+    </a>
 
-      <!-- Card 6 -->
-      <div class="product-card reveal reveal-delay-3">
-        <div class="product-card-img">
-          <img src="https://images.pexels.com/photos/2547565/pexels-photo-2547565.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop" alt="Caja Refrigerada Semirremolque" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-card-body">
-          <div class="product-card-name">Caja Refrigerada</div>
-          <ul class="product-specs">
-            <li>Temperatura -20°C a +18°C</li>
-            <li>Unidad Thermo King / Carrier</li>
-            <li>Paneles de 4" aislamiento</li>
-            <li>Transporte de alimentos</li>
-          </ul>
-          <a href="#" class="product-link">Ver detalles →</a>
-        </div>
+    <a class="item" href="https://form.platoforms.com/frkh5lrtqww" target="_blank" data-name="Cama Baja 3E 53P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Cama Baja 3E 53P</div>
+        <div class="item-url">form.platoforms.com/frkh5lrtqww</div>
       </div>
-    </div>
-  </div>
-</section>
+      <div class="arrow">→</div>
+    </a>
 
-<!-- ── STATS ── -->
-<div class="stats-bar">
-  <div class="inner">
-    <div class="stat-item reveal">
-      <div class="stat-num">+500</div>
-      <div class="stat-label">Equipos entregados</div>
-    </div>
-    <div class="stat-item reveal reveal-delay-1">
-      <div class="stat-num">15+</div>
-      <div class="stat-label">Años de experiencia</div>
-    </div>
-    <div class="stat-item reveal reveal-delay-2">
-      <div class="stat-num">98%</div>
-      <div class="stat-label">Clientes satisfechos</div>
-    </div>
-    <div class="stat-item reveal reveal-delay-3">
-      <div class="stat-num">24/7</div>
-      <div class="stat-label">Soporte técnico</div>
-    </div>
-  </div>
-</div>
+    <a class="item" href="https://form.platoforms.com/frlu4crod5k" target="_blank" data-name="Dolly">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Dolly</div>
+        <div class="item-url">form.platoforms.com/frlu4crod5k</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
 
-<!-- ── ABOUT / VALUE PROP ── -->
-<section class="about-section" id="nosotros">
-  <div class="inner">
-    <div class="about-left reveal">
-      <div class="section-eyebrow" style="color:var(--green)">¿Por qué SS FORZA?</div>
-      <h2>Más que equipos,<br><em>impulsamos</em><br>tu crecimiento.</h2>
-      <p>En SS FORZA entendemos tu negocio. Por eso te ofrecemos financiamiento accesible, equipos confiables y soporte continuo para que tu flota nunca se detenga.</p>
-      <a href="#contacto" class="btn-green btn-green-lg">Hablar con un asesor →</a>
-    </div>
-    <div class="value-list reveal reveal-delay-2">
-      <div class="value-item">
-        <div class="value-icon-wrap">💰</div>
-        <div class="value-text">
-          <strong>Financiamiento a la medida</strong>
-          <span>Planes diseñados según tu capacidad de pago y tipo de operación. Sin burocracia.</span>
-        </div>
+    <a class="item" href="https://form.platoforms.com/frgtlw5pulv" target="_blank" data-name="Encortinada 2E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Encortinada 2E 40P</div>
+        <div class="item-url">form.platoforms.com/frgtlw5pulv</div>
       </div>
-      <div class="value-item">
-        <div class="value-icon-wrap">📊</div>
-        <div class="value-text">
-          <strong>Tasas Competitivas</strong>
-          <span>Acceso a las mejores tasas del mercado con respaldo de instituciones financieras líderes.</span>
-        </div>
-      </div>
-      <div class="value-item">
-        <div class="value-icon-wrap">🚫</div>
-        <div class="value-text">
-          <strong>Sin pagos iniciales*</strong>
-          <span>Empieza a operar sin necesidad de un gran desembolso inicial. Sujeto a aprobación crediticia.</span>
-        </div>
-      </div>
-      <div class="value-item">
-        <div class="value-icon-wrap">🔧</div>
-        <div class="value-text">
-          <strong>Soporte post-venta</strong>
-          <span>Red nacional de servicio técnico especializado. Refacciones originales disponibles.</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+      <div class="arrow">→</div>
+    </a>
 
-<!-- ── FINANCIAMIENTO ── -->
-<section class="finance-section" id="financiamiento">
-  <div class="inner">
-    <div class="reveal">
-      <div class="section-eyebrow" style="color:var(--green)">Planes de Financiamiento</div>
-      <h2 class="section-title light" style="margin-bottom:16px">La solución<br>financiera que<br>necesitas</h2>
-      <p style="color:rgba(255,255,255,0.45);font-size:15px;line-height:1.7;margin-bottom:32px;max-width:360px">Desde arrendamiento puro hasta crédito con opción a compra. Encontramos el esquema ideal para tu empresa.</p>
-      <a href="#contacto" class="btn-green btn-green-lg">Solicitar cotización →</a>
-    </div>
-    <div class="finance-card-grid reveal reveal-delay-2">
-      <div class="finance-card">
-        <div class="finance-card-icon">📝</div>
-        <div class="finance-card-title">Arrendamiento Puro</div>
-        <div class="finance-card-desc">Usa el equipo sin adquirirlo. Ideal para optimizar flujo de caja y balance fiscal.</div>
+    <a class="item" href="https://form.platoforms.com/frq22gsf531" target="_blank" data-name="Encortinada 2E 53P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Encortinada 2E 53P</div>
+        <div class="item-url">form.platoforms.com/frq22gsf531</div>
       </div>
-      <div class="finance-card">
-        <div class="finance-card-icon">🏦</div>
-        <div class="finance-card-title">Crédito Refaccionario</div>
-        <div class="finance-card-desc">Adquiere el equipo financiado a plazos de hasta 60 meses con tasas preferenciales.</div>
-      </div>
-      <div class="finance-card">
-        <div class="finance-card-icon">🔄</div>
-        <div class="finance-card-title">Renta con Opción</div>
-        <div class="finance-card-desc">Arrienda hoy y decide al final del plazo si lo compras, renuevas o devuelves.</div>
-      </div>
-      <div class="finance-card">
-        <div class="finance-card-icon">📱</div>
-        <div class="finance-card-title">Sale & Leaseback</div>
-        <div class="finance-card-desc">Vende tu equipo actual y vuelve a arrendarlo. Libera capital sin dejar de operar.</div>
-      </div>
-      <div class="finance-card featured">
-        <div class="finance-card-icon" style="font-size:36px">⚡</div>
-        <div>
-          <div class="finance-card-title" style="color:var(--green)">Aprobación exprés en 24 horas</div>
-          <div class="finance-card-desc" style="font-size:13px">Enviamos tu propuesta personalizada el mismo día. Solo necesitas 3 documentos básicos de tu empresa.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+      <div class="arrow">→</div>
+    </a>
 
-<!-- ── CTA WHATSAPP ── -->
-<div class="cta-wa">
-  <div class="inner">
-    <div class="cta-wa-left">
-      <div class="wa-icon">💬</div>
-      <div class="cta-wa-text">
-        <strong>Cotiza por WhatsApp</strong>
-        <span>y recibe una respuesta inmediata de nuestros asesores</span>
+    <a class="item" href="https://form.platoforms.com/frd69h88019" target="_blank" data-name="Encortinada 3E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Encortinada 3E 40P</div>
+        <div class="item-url">form.platoforms.com/frd69h88019</div>
       </div>
-    </div>
-    <a href="https://wa.me/5214441234567?text=Hola,%20quiero%20cotizar%20un%20semirremolque" class="btn-dark">
-      COTIZAR AHORA
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frvgnkh7zpa" target="_blank" data-name="Encortinada 3E 53P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Encortinada 3E 53P</div>
+        <div class="item-url">form.platoforms.com/frvgnkh7zpa</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/fr3xilmg7il" target="_blank" data-name="Góndola 2E">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Góndola 2E</div>
+        <div class="item-url">form.platoforms.com/fr3xilmg7il</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frkse6silbh" target="_blank" data-name="Góndola 3E">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Góndola 3E</div>
+        <div class="item-url">form.platoforms.com/frzb6qo96bm</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frijc0e6cim" target="_blank" data-name="Jaula Chatarrera 2E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Jaula Chatarrera 2E 40P</div>
+        <div class="item-url">form.platoforms.com/frijc0e6cim</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frhy0yp64sv" target="_blank" data-name="Jaula Chatarrera 3E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Jaula Chatarrera 3E 40P</div>
+        <div class="item-url">form.platoforms.com/frhy0yp64sv</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frcmmbx25xo" target="_blank" data-name="Jaula Granelera 2E">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Jaula Granelera 2E</div>
+        <div class="item-url">form.platoforms.com/frcmmbx25xo</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frchlmzng05" target="_blank" data-name="Jaula Granelera 3E">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Jaula Granelera 3E</div>
+        <div class="item-url">form.platoforms.com/frchlmzng05</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frz3ieil985" target="_blank" data-name="Plataforma Alta 2E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma Alta 2E 40P</div>
+        <div class="item-url">form.platoforms.com/frz3ieil985</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frliwoakot4" target="_blank" data-name="Plataforma Alta 2E 42P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma Alta 2E 42P</div>
+        <div class="item-url">form.platoforms.com/frliwoakot4</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frk8gms99a1" target="_blank" data-name="Plataforma Alta 2E 45P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma Alta 2E 45P</div>
+        <div class="item-url">form.platoforms.com/frk8gms99a1</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frq4uee8a2g" target="_blank" data-name="Plataforma Alta 2E 48P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma Alta 2E 48P</div>
+        <div class="item-url">form.platoforms.com/frq4uee8a2g</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/fryahswnd57" target="_blank" data-name="Plataforma Alta 2E 53P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma Alta 2E 53P</div>
+        <div class="item-url">form.platoforms.com/fryahswnd57</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frm431l612e" target="_blank" data-name="Plataforma Alta 3E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma Alta 3E 40P</div>
+        <div class="item-url">form.platoforms.com/frm431l612e</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/fr2qenmhzfm" target="_blank" data-name="Plataforma Alta 3E 42P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma Alta 3E 42P</div>
+        <div class="item-url">form.platoforms.com/fr2qenmhzfm</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frny4hgl460" target="_blank" data-name="Plataforma Alta 3E 45P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma Alta 3E 45P</div>
+        <div class="item-url">form.platoforms.com/frny4hgl460</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/fruseb8yjnh" target="_blank" data-name="Plataforma Alta 3E 48P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma Alta 3E 48P</div>
+        <div class="item-url">form.platoforms.com/fruseb8yjnh</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frzg6mq9bge" target="_blank" data-name="Plataforma Alta 3E 53P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma Alta 3E 53P</div>
+        <div class="item-url">form.platoforms.com/frzg6mq9bge</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/freibqsswhj" target="_blank" data-name="Plataforma HQ 2E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 2E 40P</div>
+        <div class="item-url">form.platoforms.com/freibqsswhj</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/fr0rzh7pdpu" target="_blank" data-name="Plataforma HQ 2E 42P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 2E 42P</div>
+        <div class="item-url">form.platoforms.com/fr0rzh7pdpu</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frsuztxof8l" target="_blank" data-name="Plataforma HQ 2E 48P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 2E 48P</div>
+        <div class="item-url">form.platoforms.com/frsuztxof8l</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frwsz7r5h0k" target="_blank" data-name="Plataforma HQ 2E 53P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 2E 53P</div>
+        <div class="item-url">form.platoforms.com/frwsz7r5h0k</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/fre45v6ng7f" target="_blank" data-name="Plataforma HQ 3E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 3E 40P</div>
+        <div class="item-url">form.platoforms.com/fre45v6ng7f</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/fr3gznyk0j9" target="_blank" data-name="Plataforma HQ 3E 42P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 3E 42P</div>
+        <div class="item-url">form.platoforms.com/fr3gznyk0j9</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frbhib225uf" target="_blank" data-name="Plataforma HQ 3E 48P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 3E 48P</div>
+        <div class="item-url">form.platoforms.com/frbhib225uf</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frt7gmtfieu" target="_blank" data-name="Plataforma HQ 3E 53P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Plataforma HQ 3E 53P</div>
+        <div class="item-url">form.platoforms.com/frt7gmtfieu</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frozwv59v5u" target="_blank" data-name="Porta 20 2E 20P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Porta 20 2E 20P</div>
+        <div class="item-url">form.platoforms.com/frozwv59v5u</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frjzv0mfwes" target="_blank" data-name="Porta 4020 2E">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Porta 4020 2E</div>
+        <div class="item-url">form.platoforms.com/frjzv0mfwes</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frcea878it7" target="_blank" data-name="Porta 4020 3E">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Porta 4020 3E</div>
+        <div class="item-url">form.platoforms.com/frcea878it7</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/fr0slhxbvbz" target="_blank" data-name="Porta Burrita 4020">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Porta Burrita 4020</div>
+        <div class="item-url">form.platoforms.com/fr0slhxbvbz</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/fr3ke3t3zif" target="_blank" data-name="Porta40 2E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Porta40 2E 40P</div>
+        <div class="item-url">form.platoforms.com/fr3ke3t3zif</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frckqv2vzjq" target="_blank" data-name="Porta40 3E 40P">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Porta40 3E 40P</div>
+        <div class="item-url">form.platoforms.com/frckqv2vzjq</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frxp322yxlj" target="_blank" data-name="Rampa">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Rampa</div>
+        <div class="item-url">form.platoforms.com/frxp322yxlj</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frc69nj7ecl" target="_blank" data-name="Roll Off 18M3">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Roll Off 18M3</div>
+        <div class="item-url">form.platoforms.com/frc69nj7ecl</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frxdcn11dje" target="_blank" data-name="Roll Off 30M3">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Roll Off 30M3</div>
+        <div class="item-url">form.platoforms.com/frxdcn11dje</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="item" href="https://form.platoforms.com/frpboui33y5" target="_blank" data-name="Log Trailer">
+      <div class="item-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="8" rx="1.5" stroke="#111110" stroke-width="1.3"/><circle cx="4" cy="11" r="1.5" fill="#111110"/><circle cx="12" cy="11" r="1.5" fill="#111110"/><path d="M1 7.5h14" stroke="#111110" stroke-width="1.3"/></svg></div>
+      <div class="item-body">
+        <div class="item-name">Log Trailer</div>
+        <div class="item-url">form.platoforms.com/frpboui33y5</div>
+      </div>
+      <div class="arrow">→</div>
     </a>
   </div>
+
+  <div id="empty">
+    <div class="empty-icon">🔍</div>
+    <p>Sin resultados para <span id="emptyQuery"></span></p>
+  </div>
+
+  <footer>JJForza &nbsp;·&nbsp; Uso interno &nbsp;·&nbsp; 2026</footer>
+
 </div>
 
-<!-- ── FOOTER ── -->
-<footer id="contacto">
-  <div class="inner">
-    <div class="footer-grid">
-      <!-- Brand -->
-      <div class="footer-brand">
-        <div class="nav-logo" style="margin-bottom:0">
-          <div class="logo-badge">SS</div>
-          <div>
-            <div class="logo-text">FORZA</div>
-            <div class="logo-sub">Semirremolques</div>
-          </div>
-        </div>
-        <p>Soluciones de transporte y financiamiento que mueven tu negocio.</p>
-        <div class="footer-social">
-          <a href="#" class="social-btn">f</a>
-          <a href="#" class="social-btn">ig</a>
-          <a href="#" class="social-btn">in</a>
-        </div>
-      </div>
-
-      <!-- Navegación -->
-      <div class="footer-col">
-        <h4>Navegación</h4>
-        <ul>
-          <li><a href="#catalogo">Catálogo</a></li>
-          <li><a href="#financiamiento">Financiamiento</a></li>
-          <li><a href="#">Refacciones</a></li>
-          <li><a href="#nosotros">Nosotros</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-        </ul>
-      </div>
-
-      <!-- Productos -->
-      <div class="footer-col">
-        <h4>Productos</h4>
-        <ul>
-          <li><a href="#">Caja Seca</a></li>
-          <li><a href="#">Plataforma</a></li>
-          <li><a href="#">Portacontenedor</a></li>
-          <li><a href="#">Lowboy</a></li>
-          <li><a href="#">Tolva</a></li>
-        </ul>
-      </div>
-
-      <!-- Contacto -->
-      <div class="footer-col">
-        <h4>Contacto</h4>
-        <div class="contact-item">
-          <span class="icon">📍</span>
-          <span>San Luis Potosí, S.L.P., México</span>
-        </div>
-        <div class="contact-item">
-          <span class="icon">📞</span>
-          <span>444 123 4567</span>
-        </div>
-        <div class="contact-item">
-          <span class="icon">✉️</span>
-          <span>ventas@ssforza.com.mx</span>
-        </div>
-        <div class="contact-item">
-          <span class="icon">🕐</span>
-          <span>Lun – Vie: 8:00 – 18:00</span>
-        </div>
-      </div>
-
-      <!-- Certificaciones -->
-      <div class="footer-col">
-        <h4>Certificaciones</h4>
-        <div class="iso-badge" style="margin-bottom:8px">
-          ISO<br><small>9001:2015</small>
-        </div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.3);font-family:var(--ff-body)">
-          Empresa Certificada
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <span>© 2024 SS FORZA Semirremolques. Todos los derechos reservados.</span>
-      <div class="footer-links">
-        <a href="#">Aviso de Privacidad</a>
-        <a href="#">Términos y Condiciones</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
 <script>
-// ── Sticky nav shadow ──────────────────────────────────────────────────────
-window.addEventListener('scroll', () => {
-  document.getElementById('main-nav').classList.toggle('scrolled', scrollY > 20)
-})
+  const search     = document.getElementById('search');
+  const clearBtn   = document.getElementById('clearBtn');
+  const items      = document.querySelectorAll('.item');
+  const countBadge = document.getElementById('countBadge');
+  const empty      = document.getElementById('empty');
+  const emptyQuery = document.getElementById('emptyQuery');
+  const total      = items.length;
 
-// ── Active nav links on scroll ──────────────────────────────────────────────
-const sections = document.querySelectorAll('section[id], div[id]')
-const navLinks = document.querySelectorAll('.nav-links a')
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      navLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id)
-      })
-    }
-  })
-}, { threshold: 0.4 })
-sections.forEach(s => observer.observe(s))
-
-// ── Scroll reveal ────────────────────────────────────────────────────────────
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') })
-}, { threshold: 0.12 })
-document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el))
-
-// ── Mobile menu ──────────────────────────────────────────────────────────────
-function toggleMenu() {
-  const links = document.querySelector('.nav-links')
-  if (links.style.display === 'flex') {
-    links.style.display = 'none'
-  } else {
-    links.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:#0D0D0D;padding:16px 20px;gap:4px;border-bottom:2px solid #5BBD4E;z-index:98'
+  function normalize(str) {
+    return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   }
-}
 
-// ── Smooth scroll ────────────────────────────────────────────────────────────
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    e.preventDefault()
-    const target = document.querySelector(this.getAttribute('href'))
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  })
-})
+  function highlight(text, query) {
+    if (!query) return text;
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp('(' + escaped + ')', 'gi');
+    return text.replace(re, '<mark>$1</mark>');
+  }
+
+  search.addEventListener('input', function () {
+    const raw = this.value;
+    const q   = normalize(raw.trim());
+
+    clearBtn.classList.toggle('visible', raw.length > 0);
+
+    let visible = 0;
+    items.forEach(item => {
+      const name     = item.dataset.name;
+      const match    = !q || normalize(name).includes(q);
+      item.classList.toggle('hidden', !match);
+      if (match) {
+        visible++;
+        item.querySelector('.item-name').innerHTML = q ? highlight(name, raw.trim()) : name;
+      }
+    });
+
+    empty.style.display   = visible === 0 ? 'block' : 'none';
+    emptyQuery.textContent = `"${raw.trim()}"`;
+    countBadge.textContent = q ? `${visible} de ${total}` : `${total} formularios`;
+  });
+
+  clearBtn.addEventListener('click', () => {
+    search.value = '';
+    search.dispatchEvent(new Event('input'));
+    search.focus();
+  });
 </script>
 </body>
 </html>
